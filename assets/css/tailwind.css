@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    *{
+        box-sizing: border-box;
+    }
+    body{
+        background: linear-gradient(135deg, #9897d9, #5d59ca);
+    }
+    input, textarea{
+        border: 1px solid rgb(172, 172, 172);
+        @apply px-2 py-1;
+    }
+
+    label {
+        @apply font-bold;
+    }
+    
+    .form-container{
+        max-width: 900px;
+        @apply w-[90%] p-4 bg-white rounded-lg mx-auto my-4;
+    }
+    
+    .form {
+        @apply flex flex-wrap flex-col p-4 items-start gap-4;
+    }
+
+    .form > *{
+        /* width: 50%; */
+        @apply mx-[.5rem];
+    }
+
+    @media (min-width: 660px) {
+        body{
+            @apply h-screen;
+        }
+        .form-container{
+            @apply absolute top-[50%] left-[50%] text-[1.1rem];
+            transform: translate(-50%, -50%);
+
+        }
+        .form{
+            @apply flex-row;
+        }
+        .form > *{
+            width: 40%;
+        }
+    }
+
+    
+}
