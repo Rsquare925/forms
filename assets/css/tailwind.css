@@ -28,9 +28,19 @@
     }
 
     .form > *{
-        /* width: 50%; */
         @apply mx-[.5rem];
     }
+
+    div[data-error] input{
+        @apply border-[#c92432] text-[#c92432] bg-[#fffafa];
+    }
+
+    div[data-error]::after{
+        content: attr(data-error); 
+        @apply text-[0.85em] text-[#c92432] block mt-1;
+
+    }
+
 
     @media (min-width: 660px) {
         body{
