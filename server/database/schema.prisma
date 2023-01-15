@@ -1,29 +1,26 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url = env("Database_URL")
+  provider = "mysql"
+  url      = env("Database_URL")
 }
 
 model station_master {
-    stnCode        String      @id
-    stnName        String?
-    startDate      String    
-    endDate        String?
-    booking         Boolean
-    delivery        Boolean
-    transshipment   Boolean
-    address         String
-    city            String
-    state           String
-    pincode         String
-    contactPerson  String
-    officePhoneNo String?
-    email           String
-    mobileNo       String
+  stnCode       String    @id @db.Char(3)
+  stnName       String?   @db.VarChar(100)
+  startDate     DateTime  @db.Date
+  endDate       DateTime? @db.Date
+  booking       Boolean   @db.Bit(1)
+  delivery      Boolean   @db.Bit(1)
+  transshipment Boolean   @db.Bit(1)
+  address       String    
+  city          String    @db.VarChar(100)
+  state         String    @db.VarChar(100)
+  pincode       String    @db.Char(6)
+  contactPerson String    @db.VarChar(50)
+  officePhoneNo String?   @db.Char(10)
+  email         String
+  mobileNo      String    @db.Char(10)
 }
