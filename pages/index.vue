@@ -1,6 +1,6 @@
 <template>
     <div>
-        <UserMasterForm/>
+        <StationMasterForm/>
     </div>
 </template>
 

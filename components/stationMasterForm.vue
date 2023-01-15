@@ -1,6 +1,6 @@
 <template>
     <div class="form-container">
-        <h1 class="text-center text-[2rem] font-bold">User Master</h1>
+        <h1 class="text-center text-[2rem] font-bold">Station Master</h1>
         <form class="form">
             <div>
                 <label for="stnCode">Station Code*</label><br>
@@ -46,7 +46,7 @@
                 </div>
                 <div>
                     <label for="pin">Pin Code*</label><br>
-                    <input v-model="pinCode" type="text" id="pin" name="pin" maxlength="6" required>
+                    <input v-model="pincode" type="text" id="pin" name="pin" maxlength="6" required>
                 </div>
                 <div class="">
                     <label for="state">State*</label><br>
@@ -79,7 +79,7 @@
                 <input v-model="mobileNo" type="text" name="mobileNo" id="mobileNo" maxlength="10" required>
             </div>
 
-            <button class="font-bold bg-[#5652cc] text-white px-4 py-2 rounded-[.5rem] text-[1rem] hover:bg-[#221cd2] submit-btn" @click.prevent="submitUserMaster($event)">Submit</button>
+            <button class="font-bold bg-[#5652cc] text-white px-4 py-2 rounded-[.5rem] text-[1rem] hover:bg-[#221cd2] submit-btn" @click.prevent="submitStationMaster($event)">Submit</button>
 
         </form>
 
@@ -104,17 +104,17 @@ const delivery = ref(false);
 const transshipment = ref(false);
 const address = ref("");
 const city = ref("");
-const pinCode = ref("");
+const pincode = ref("");
 const state = ref("");
 const contactPerson = ref("");
 const officePhoneNo = ref("");
 const email = ref("");
 const mobileNo = ref("");
 
-function submitUserMaster(event: MouseEvent){
+function submitStationMaster(event: MouseEvent){
     const inputArr: Ref<string>[] = [stnCode, startDate, address, city, state, contactPerson];
     const mobileNoEle = document.getElementById('mobileNo')!;
-    const pinCodeEle = document.getElementById('pin')!;
+    const pincodeEle = document.getElementById('pin')!;
     const stnCodeEle = document.getElementById('stnCode')!;
     const addressEle = document.getElementById('address')!;
     const cityEle = document.getElementById('city')!;
@@ -126,10 +126,10 @@ function submitUserMaster(event: MouseEvent){
     const inputEleArr: HTMLElement[] = [stnCodeEle, startDateEle, addressEle, cityEle, stateEle, contactPersonEle];
     const errorArr: string[] = ["Station Code", "date", "address", "city", "state", "contact person's name"]
 
-    if(validateAllStringInput(inputArr, inputEleArr, errorArr) && validatePinCode(pinCode.value, pinCodeEle) && validateEmail(email.value, emailEle)&& validateMobileNo(mobileNo.value, mobileNoEle) )
+    if(validateAllStringInput(inputArr, inputEleArr, errorArr) && validatePinCode(pincode.value, pincodeEle) && validateEmail(email.value, emailEle)&& validateMobileNo(mobileNo.value, mobileNoEle) )
     {
         console.log("done");
-        sendUserMasterData();
+        sendStationMasterData();
     }
     else{
         console.log("no");
@@ -137,26 +137,26 @@ function submitUserMaster(event: MouseEvent){
     }
 }
 
-async function sendUserMasterData(){
+async function sendStationMasterData(){
     try{
-        const res = await $fetch('/api/user-master', {
+        const res = await $fetch('/api/station-master', {
             method: 'POST',
             body: { 
-                stnCode,
-                stnName,
-                startDate,
-                endDate,
-                booking,
-                delivery,
-                transshipment,
-                address,
-                city,
-                pinCode,
-                state,
-                contactPerson,
-                officePhoneNo,
-                email,
-                mobileNo
+                stnCode: stnCode.value,
+                stnName: stnName.value,
+                startDate: startDate.value,
+                endDate: endDate.value,
+                booking: booking.value,
+                delivery: delivery.value,
+                transshipment: transshipment.value,
+                address: address.value,
+                city: city.value,
+                pincode: pincode.value,
+                state: state.value,
+                contactPerson: contactPerson.value,
+                officePhoneNo: officePhoneNo.value,
+                email: email.value,
+                mobileNo: mobileNo.value
             }
         });
         console.log(res)

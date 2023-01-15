@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url = env("Database_URL")
+}
+
+model station_master {
+    stnCode        String      @id
+    stnName        String?
+    startDate      String    
+    endDate        String?
+    booking         Boolean
+    delivery        Boolean
+    transshipment   Boolean
+    address         String
+    city            String
+    state           String
+    pincode         String
+    contactPerson  String
+    officePhoneNo String?
+    email           String
+    mobileNo       String
+}
