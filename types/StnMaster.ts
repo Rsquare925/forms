@@ -1,6 +1,6 @@
 export interface StnMaster {
     stnCode: string
-    stnName: string | null
+    stnName: string
     startDate: string
     endDate: string | null
     booking: boolean

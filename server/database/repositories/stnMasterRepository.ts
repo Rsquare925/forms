@@ -35,3 +35,18 @@ export async function createStn(stnData: StnMaster){
     })
     return stn;
 }
+
+interface StnNames {
+    stnName: string | null;
+}
+
+export async function getAllStnNames():
+ Promise<StnNames[]>{
+    const stnNames = await prisma.station_master.findMany({
+        select: {
+            stnName: true,
+        }
+    });
+
+    return stnNames;
+}

@@ -9,7 +9,7 @@
 
             <div>
                 <label for="stnName">Station Name</label><br>
-                <input v-model="stnName" type="text" maxlength="100" name="stnName" id="stnName">
+                <input v-model="stnName" type="text" maxlength="100" name="stnName" id="stnName" required>
             </div>
             <div>
                 <label for="startDate">Start Date*</label><br>
@@ -79,7 +79,7 @@
                 <input v-model="mobileNo" type="text" name="mobileNo" id="mobileNo" maxlength="10" required>
             </div>
 
-            <button class="font-bold bg-[#5652cc] text-white px-4 py-2 rounded-[.5rem] text-[1rem] hover:bg-[#221cd2] submit-btn" @click.prevent="submitStationMaster($event)">Submit</button>
+            <button class="font-bold bg-[#5652cc] text-white px-4 py-2 rounded-[.5rem] text-[1rem] hover:bg-[#221cd2] submit-btn" @click.prevent="submitStationMaster()">Submit</button>
 
         </form>
 
@@ -89,15 +89,12 @@
 
 <script setup lang="ts">
 import { Ref } from '@vue/reactivity';
-import { electron } from 'webpack';
-
-
 
 const states: string[] = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Lakshadweep", "Delhi", "Puducherry", "Jammu and Kashmir", "Ladakh",
 ]
 
 const stnCode = ref("");
-const stnName: Ref<string | null> = ref(null);
+const stnName = ref("");
 const startDate = ref("");
 const endDate: Ref<string | null> = ref(null);
 const booking = ref(false);
@@ -112,11 +109,12 @@ const officePhoneNo: Ref<string | null> = ref(null);
 const email = ref("");
 const mobileNo = ref("");
 
-function submitStationMaster(event: MouseEvent){
-    const inputArr: Ref<string>[] = [stnCode, startDate, address, city, state, contactPerson];
+function submitStationMaster(){
+    const inputArr: Ref<string>[] = [stnCode, stnName, startDate, address, city, state, contactPerson];
     const mobileNoEle = document.getElementById('mobileNo')!;
     const pincodeEle = document.getElementById('pin')!;
     const stnCodeEle = document.getElementById('stnCode')!;
+    const stnNameEle = document.getElementById('stnName')!;
     const addressEle = document.getElementById('address')!;
     const cityEle = document.getElementById('city')!;
     const stateEle = document.getElementById('state')!;
@@ -124,9 +122,9 @@ function submitStationMaster(event: MouseEvent){
     const startDateEle = document.getElementById('startDate')!;
     const emailEle = document.getElementById('email')!;
 
-    const inputEleArr: HTMLElement[] = [stnCodeEle, startDateEle, addressEle, cityEle, stateEle, contactPersonEle];
+    const inputEleArr: HTMLElement[] = [stnCodeEle, stnNameEle, startDateEle, addressEle, cityEle, stateEle, contactPersonEle];
 
-    const errorArr: string[] = ["Station Code", "date", "address", "city", "state", "contact person's name"]
+    const errorArr: string[] = ["Station Code", "Station Name", "date", "address", "city", "state", "contact person's name"]
 
     if(validateAllStringInput(inputArr, inputEleArr, errorArr) && validatePinCode(pincode.value, pincodeEle) && validateEmail(email.value, emailEle)&& validateMobileNo(mobileNo.value, mobileNoEle) )
     {
@@ -141,7 +139,7 @@ function submitStationMaster(event: MouseEvent){
 
 async function sendStationMasterData(){
     try{
-        const res = await $fetch('/api/station-master', {
+        const res = await $fetch('/api/stationMaster', {
             method: 'POST',
             body: { 
                 stnCode: stnCode.value,
@@ -168,109 +166,25 @@ async function sendStationMasterData(){
     }
 }
 
-// this function generate field validation error or remove error by removing data-error property
-function generateFieldsErr(element: HTMLElement, error?: string){
-    if(!error){
-        element.parentElement!.removeAttribute('data-error');
-        return;
-    }
-    element.parentElement!.dataset.error = error;
-
-}
-
-// function to check any mobile no 
-function validateMobileNo(no: string, element: HTMLElement): boolean{
-    // regex for checking correct format of mobile no
-    const regex = /^[1-9][0-9]{9}$/;
-    if(no.match(regex)){
-        generateFieldsErr(element);
-        // element.parentElement!.removeAttribute('data-error');
-        return true;
-    }
-    // element.parentElement!.dataset.error = "Enter a valid phone no";
-    const errorMsg = "Enter a valid phone no";
-    generateFieldsErr(element, errorMsg);
-    return false
-}
-
 // function to validate pin code
 function validatePinCode(pin: string, element: HTMLElement): boolean{
     // regex for checking correct format of pin code
     const regex = /^[0-9]{6}$/;
     if(pin.match(regex)){
-        // element.parentElement!.removeAttribute('data-error')
         generateFieldsErr(element)
         return true;
     }
-    // element.parentElement!.dataset.error = "Enter a valid pincode";
     const errorMsg = "Enter a valid pincode";
     generateFieldsErr(element, errorMsg);
     return false;
 }
 
-// function to check all mandatory text input is empty or not except pin and mobileNo
-function validateAllStringInput(inputArr: Ref<string>[], inputEleArr: HTMLElement[], errorArr: string[]): boolean {
-    for (let i=0; i<inputArr.length; i++){
-        if(!validateStringInput(inputArr[i], inputEleArr[i], errorArr[i])){
-            return false;
-        }
-    }
-    return true;
-
-}
-
-// function to check if input is empty or not
-function validateStringInput(input: Ref<string>, inputEle: HTMLElement, error: string): boolean{
-    const str = input.value.trim();
-    if(str){
-        generateFieldsErr(inputEle)
-        input.value = str;
-        return true;
-    }
-    input.value = "";
-    // inputEle.parentElement!.dataset.error = `Enter valid ${error}`;
-    const errorMsg = `Enter valid ${error}`;
-    generateFieldsErr(inputEle, errorMsg);
-    return false;
-}
-
-// function for checking email address
-function validateEmail(input: string, element: HTMLElement) {
-    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-    if (input.match(validRegex)) {
-        element.parentElement!.removeAttribute('data-error')
-        generateFieldsErr(element);
-        return true;
-    }
-    // element.parentElement!.dataset.error = "Enter a valid email";
-    const errorMsg = "Enter a valid email";
-    generateFieldsErr(element, errorMsg);
-    return false;
-    
-}
-
-
-
 </script>
 
 <style scoped>
-
-h1 {
-    border-bottom: 1px solid rgb(212, 209, 209);
-}
 .input-address > *{
     @apply mb-2;
 }
-
-.form {
-    @apply justify-center;
-}
-
-.submit-btn{
-    @apply mt-4;
-}
-
 
 @media (min-width: 660px) {
     .checkbox-container{

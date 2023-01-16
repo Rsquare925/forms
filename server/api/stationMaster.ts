@@ -3,7 +3,7 @@ import { H3Event, sendError } from 'h3'
 import { doesStnExists } from '~/server/database/services/stnMasterService';
 import { createStn } from '~/server/database/repositories/stnMasterRepository';
 
-export default async(event: H3Event) => {
+export default defineEventHandler(async (event) => {
     const body = await readBody(event);
     // console.log(body.stnCode);
 
@@ -37,5 +37,5 @@ export default async(event: H3Event) => {
     const stnMaster = await createStn(stnData);
 
     return stnMaster;
-}
+})
 

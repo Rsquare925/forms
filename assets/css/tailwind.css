@@ -17,6 +17,11 @@
     label {
         @apply font-bold;
     }
+
+
+    h1 {
+        border-bottom: 1px solid rgb(212, 209, 209);
+    }
     
     .form-container{
         max-width: 900px;
@@ -24,7 +29,7 @@
     }
     
     .form {
-        @apply flex flex-wrap flex-col p-4 items-start gap-4;
+        @apply flex flex-wrap flex-col p-4 items-start gap-4 justify-center;
     }
 
     .form > *{
@@ -41,6 +46,9 @@
 
     }
 
+    .submit-btn{
+        @apply mt-4;
+    }
 
     @media (min-width: 660px) {
         body{
