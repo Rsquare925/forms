@@ -1,9 +1,5 @@
 import { getUserMasterByEmail } from "~/server/database/repositories/userMasterRepository";
-
-type ExistsCheck = {
-    value: boolean
-    message?: string
-};
+import { ExistsCheck } from "~~/types/ExistsCheck";
 
 export async function doesEmailExists(email: string): Promise<ExistsCheck>{
     let stnExists = await getUserMasterByEmail(email);

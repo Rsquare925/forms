@@ -7,7 +7,11 @@
         box-sizing: border-box;
     }
     body{
+        @apply  min-h-screen flex items-center justify-around;
         background: linear-gradient(135deg, #9897d9, #5d59ca);
+    }
+    body > *{
+        @apply w-[90%];
     }
     input, textarea{
         border: 1px solid rgb(172, 172, 172);
@@ -22,10 +26,14 @@
     h1 {
         border-bottom: 1px solid rgb(212, 209, 209);
     }
+
+    select {
+        @apply p-2;
+    }
     
     .form-container{
         max-width: 900px;
-        @apply w-[90%] p-4 bg-white rounded-lg mx-auto my-4;
+        @apply p-4 bg-white rounded-lg mx-auto my-4;
     }
     
     .form {
@@ -46,26 +54,58 @@
 
     }
 
+    button {
+        @apply mt-4 font-bold  px-4 py-2 rounded-[.5rem] text-[1rem] min-w-[150px];
+    }
     .submit-btn{
-        @apply mt-4;
+        @apply bg-[#5652cc] text-white  hover:bg-[#221cd2];
+    }
+    .edit-btn {
+        @apply bg-[#d92727] text-white  hover:bg-[#a31c1c];
     }
 
     @media (min-width: 660px) {
-        body{
-            @apply h-screen;
-        }
         .form-container{
-            @apply absolute top-[50%] left-[50%] text-[1.1rem];
-            transform: translate(-50%, -50%);
+            @apply text-[1.1rem];
 
         }
         .form{
             @apply flex-row;
         }
-        .form > *{
+        .form > :not(.overlay){
             width: 40%;
         }
+        
     }
+
+    /* edit modal  */
+    .center {
+        @apply absolute top-[50%] left-[50%] z-20;  
+        transform: translate(-50%, -50%);
+    }
+
+    .overlay{
+        margin: 0; 
+        display: none;
+    }
+
+    .overlay.open{
+        display: block;
+        @apply fixed top-[0] bottom-[0] left-[0] right-[0] z-[10];
+        background-color: rgba(0, 0, 0, .2);
+    
+    }
+    .popup {
+        @apply w-[80%] max-w-[500px] max-h-[450px] p-4 pt-8 bg-[#f5f5f5] rounded-[.9rem] text-[#222] overflow-scroll;
+        display: none;
+    }
+    
+    .popup.open{
+        display: block;
+    }
+
+
+
 
     
 }

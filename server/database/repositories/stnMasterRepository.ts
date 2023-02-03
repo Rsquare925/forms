@@ -1,5 +1,6 @@
 import { StnMaster } from "~~/types/StnMaster";
 import prisma from "~/server/database/client";
+import { station_master } from "@prisma/client";
 
 export async function getStnMasterByStnCode(stnCode: string): Promise<boolean>{
     const contactPerson =  await prisma.station_master.findUnique({
@@ -37,16 +38,26 @@ export async function createStn(stnData: StnMaster){
 }
 
 interface StnNames {
-    stnName: string | null;
+    stnName: string;
+    stnCode: string;
 }
 
 export async function getAllStnNames():
  Promise<StnNames[]>{
     const stnNames = await prisma.station_master.findMany({
         select: {
+            stnCode: true,
             stnName: true,
         }
     });
 
     return stnNames;
+}
+
+export async function getStnData(stnCode: string): Promise<station_master | null>{
+    return await prisma.station_master.findUnique({
+        where: {
+          stnCode: stnCode,
+        },
+      });
 }

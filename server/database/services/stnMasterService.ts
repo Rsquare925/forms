@@ -1,9 +1,6 @@
 import { getStnMasterByStnCode } from "~/server/database/repositories/stnMasterRepository";
+import { ExistsCheck } from "~/types/ExistsCheck";
 
-type ExistsCheck = {
-    value: boolean
-    message?: string
-};
 
 export async function doesStnExists(stnCode: string): Promise<ExistsCheck>{
     let stnExists = await getStnMasterByStnCode(stnCode);

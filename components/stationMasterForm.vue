@@ -1,56 +1,57 @@
 <template>
     <div class="form-container">
-        <h1 class="text-center text-[2rem] font-bold">Station Master</h1>
+        <h1 class="text-center text-[2rem] font-bold">STATION MASTER</h1>
         <form class="form">
             <div>
-                <label for="stnCode">Station Code*</label><br>
-                <input v-model="stnCode" type="text" maxlength="3" name="stnCode" id="stnCode" required>
-            </div>
+                <label for="stnCode">STATION CODE*</label><br>
+                <input v-model="stnCode" type="text" maxlength="3" name="stnCode" id="stnCode" class=" min-w-[120px] w-[40%]" required>
 
+                
+            </div>
             <div>
-                <label for="stnName">Station Name</label><br>
+                <label for="stnName">STATION NAME</label><br>
                 <input v-model="stnName" type="text" maxlength="100" name="stnName" id="stnName" required>
             </div>
             <div>
-                <label for="startDate">Start Date*</label><br>
+                <label for="startDate">START DATE*</label><br>
                 <input v-model="startDate" type="date" name="startDate" id="startDate" required>
             </div>
 
             <div>
-                <label for="endDate">End Date</label><br>
+                <label for="endDate">END DATE</label><br>
                 <input v-model="endDate" type="date" name="endDate" id="endDate">
             </div>
             <div class="checkbox-container my-4">
                 <div>
                     <input v-model="booking" type="checkbox" name="booking" id="booking" class="mr-1">
-                    <label for="booking">Booking</label>
+                    <label for="booking">BOOKING</label>
                 </div>
                 <div>
                     <input v-model="delivery" type="checkbox" name="delivery" id="delivery" class="mr-1">
-                    <label for="delivery">Delivery</label>
+                    <label for="delivery">DELIVERY</label>
                 </div>
                 <div>
                     <input v-model="transshipment" type="checkbox" name="transshipment" id="transshipment" class="mr-1">
-                    <label for="transshipment">Transshipment</label>
+                    <label for="transshipment">TRANSSHIPMENT</label>
                 </div>
             </div>
 
             <div class="input-address">
                 <div>
-                    <label for="address">Address*</label><br>
+                    <label for="address">ADDRESS*</label><br>
                     <textarea v-model="address" type="text" id="address" name="address" maxlength="100" row="3" required></textarea>
                 </div>  
                 <div>
-                    <label for="city">City*</label><br>
+                    <label for="city">CITY*</label><br>
                     <input v-model="city" type="text" id="city" name="city" maxlength="100" required>
                 </div>
                 <div>
-                    <label for="pin">Pin Code*</label><br>
+                    <label for="pin">PIN CODE*</label><br>
                     <input v-model="pincode" type="text" id="pin" name="pin" maxlength="6" required>
                 </div>
                 <div class="">
-                    <label for="state">State*</label><br>
-                    <select v-model="state" class=" max-w-[100%]" id="state" name="state" required>
+                    <label for="state">STATE*</label><br>
+                    <select v-model="state" class=" max-w-[90%] overflow-scroll" id="state" name="state" required>
                         <option value=""></option>
                         <option v-for="state in states"
                         :value="state" :key="state">{{state}}</option>
@@ -60,26 +61,28 @@
             </div>
 
             <div>
-                <label for="contactPerson">Contact Person's Name*</label><br>
+                <label for="contactPerson">CONTACT PERSON's NAME*</label><br>
                 <input v-model="contactPerson" type="text" maxlength="50" id="contactPerson" name="contactPerson" required>
             </div>
 
             <div>
-                <label for="officePhoneNo">Office Phone No</label><br>
+                <label for="officePhoneNo">OFFICE PHONE NO</label><br>
                 <input v-model="officePhoneNo" type="text" name="officePhoneNo" id="officePhoneNo" maxlength="10">
             </div>
 
             <div>
-                <label for="email">Email*</label><br>
+                <label for="email">EMAIL*</label><br>
                 <input v-model="email" type="email" name="email" id="email" required>
             </div>
 
             <div>
-                <label for="mobileNo">Mobile No*</label><br>
+                <label for="mobileNo">MOBILE NO*</label><br>
                 <input v-model="mobileNo" type="text" name="mobileNo" id="mobileNo" maxlength="10" required>
             </div>
-
-            <button class="font-bold bg-[#5652cc] text-white px-4 py-2 rounded-[.5rem] text-[1rem] hover:bg-[#221cd2] submit-btn" @click.prevent="submitStationMaster()">Submit</button>
+            <div>
+                <button class="submit-btn w-[80%]" @click.prevent="submitStationMaster()">Submit</button>
+            </div>
+            <EditFormModal @stnData="(stnData)=>setData(stnData)" :stnNames="stnNames"/>
 
         </form>
 
@@ -88,6 +91,7 @@
 </template>
 
 <script setup lang="ts">
+import { station_master } from '.prisma/client';
 import { Ref } from '@vue/reactivity';
 
 const states: string[] = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Lakshadweep", "Delhi", "Puducherry", "Jammu and Kashmir", "Ladakh",
@@ -108,6 +112,29 @@ const contactPerson = ref("");
 const officePhoneNo: Ref<string | null> = ref(null);
 const email = ref("");
 const mobileNo = ref("");
+
+const stnNames: Ref<{stnCode: string, stnName: string}[]> = ref([]);
+
+callStnNamesApi(stnNames);
+
+function setData(stnData: station_master){
+    stnCode.value = stnData.stnCode;
+    stnName.value = stnData.stnName;
+    startDate.value =  stnData.startDate.toString().split("T")[0];
+    endDate.value = stnData.endDate ? stnData.endDate.toString().split("T")[0] : null;
+    booking.value = stnData.booking;
+    delivery.value = stnData.delivery;
+    transshipment.value = stnData.transshipment;
+    address.value = stnData.address;
+    city.value = stnData.city;
+    pincode.value = stnData.pincode;
+    state.value = stnData.state;
+    contactPerson.value = stnData.contactPerson;
+    officePhoneNo.value = stnData.officePhoneNo;
+    email.value = stnData.email;
+    mobileNo.value = stnData.mobileNo;
+
+}
 
 function submitStationMaster(){
     const inputArr: Ref<string>[] = [stnCode, stnName, startDate, address, city, state, contactPerson];

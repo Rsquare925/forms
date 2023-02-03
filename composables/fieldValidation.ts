@@ -1,3 +1,5 @@
+import { Ref } from '@vue/reactivity';
+
 // this function generate field validation error or remove error by removing data-error property
 export function generateFieldsErr(element: HTMLElement, error?: string){
     if(!error){

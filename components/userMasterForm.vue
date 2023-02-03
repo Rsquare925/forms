@@ -1,46 +1,48 @@
 <template>
     <div class="form-container">
-        <h1 class="text-center text-[2rem] font-bold">User Master</h1>
+        <h1 class="text-center text-[2rem] font-bold">USER MASTER</h1>
         <form class="form mb-4">
             <div>
-                <label for="username">Username*</label><br>
+                <label for="username">USERNAME*</label><br>
                 <input v-model="username" type="text" maxlength="99" name="username" id="username" required>
             </div>
 
             <div>
-                <label for="password">Password*</label><br>
+                <label for="password">PASSWORD*</label><br>
                 <input v-model="password" type="password" minlength="8" maxlength="100" name="password" id="password" required>
             </div>
 
             <div>
-                <label for="email">Email*</label><br>
+                <label for="email">EMAIL*</label><br>
                 <input v-model="email" type="email" name="email" id="email" required>
             </div>
 
             <div>
-                <label for="email">Start Date*</label><br>
+                <label for="email">START DATE*</label><br>
                 <input v-model="startDate" type="date" name="startDate" id="startDate" required>
             </div>
 
             <div>
-                <label for="closeDate">Close Date</label><br>
+                <label for="closeDate">CLOSE DATE</label><br>
                 <input v-model="closeDate" type="date" name="closeDate" id="closeDate">
             </div>
 
-            <div class="mt-4">
-                    <label for="officeLink">Office Link*</label><br>
-                    <select v-model="officeLink" class=" max-w-[100%] mt-1" id="officeLink" name="officeLink" required>
+            <div class="mt-2">
+                    <label for="officeLink">OFFICE LINK*</label><br>
+                    <select v-model="officeLink" class="max-w-[100%] mt-1" id="officeLink" name="officeLink" required>
                         <option value="" ></option>
-                        <option v-for="stnName, index in stnNames" :value="stnName" :key="index">{{stnName}}</option>
+                        <option v-for="stn, index in stnNames" :value="stn.stnName" :key="index">{{stn.stnName}}</option>
                     </select>
             </div>
 
             <div>
-                <label for="mobileNo">Mobile No*</label><br>
+                <label for="mobileNo">MOBILE NO*</label><br>
                 <input v-model="mobileNo" type="text" name="mobileNo" id="mobileNo" maxlength="10" required>
             </div>
 
-            <button class="font-bold bg-[#5652cc] text-white px-4 py-2 rounded-[.5rem] text-[1rem] hover:bg-[#221cd2] submit-btn w-[40%]" @click.prevent="submitUserMaster()">Submit</button>
+            <div>
+                <button class="submit-btn w-[40%] mt-6" @click.prevent="submitUserMaster()">SUBMIT</button>
+            </div>
 
         </form>
 
@@ -60,7 +62,7 @@ const closeDate: Ref<string | null> = ref(null);
 const officeLink = ref("");
 const mobileNo = ref("");
 
-const stnNames: Ref<(string | null)[]> = ref([]);
+const stnNames: Ref<{stnName: string, stnCode: string}[]> = ref([]);
 
 function submitUserMaster(){
     const inputArr: Ref<string>[] = [username, startDate];
@@ -106,34 +108,12 @@ async function sendUserMasterData(){
         console.log('error: ', err!.toString())
     }
 }
-
-// function for getting all stn Names from stn master table
-async function getOfficeLinks(stnNames: Ref<(string | null)[]>){
-    try{
-        const res = await $fetch('/api/getStationNames');
-        if(res){
-            stnNames.value = res
-        }else{
-            console.log(res)
-
-        }
-    }
-    catch (err){
-        console.log('error: ', err!.toString())
-    }
-}
-getOfficeLinks(stnNames);
+// get all office links from stn Master table
+callStnNamesApi(stnNames);
 
 function validatePassword(password: string, passwordEle: HTMLElement): boolean{
-    // const regex = /^(?=.[A-Z])(?=.\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    // if(password.match(regex)){
-    //     generateFieldsErr(passwordEle);
-    //     return true;
-    // }
-    // const errorMsg = "A password should contain at least 1 special character, 1 uppercase letter, and 1 integer, and at least 8 characters long.";
-    // generateFieldsErr(passwordEle, errorMsg);
-    // return false;
-    if(password.trim().length === 8){
+    const trimmedPassword = password.trim();
+    if(trimmedPassword.length >= 8){
         generateFieldsErr(passwordEle);
         return true;
     }
@@ -145,4 +125,5 @@ function validatePassword(password: string, passwordEle: HTMLElement): boolean{
 </script>
 
 <style scoped>
+
 </style>

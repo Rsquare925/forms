@@ -5,7 +5,6 @@ import { createStn } from '~/server/database/repositories/stnMasterRepository';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
-    // console.log(body.stnCode);
 
     const stnExists = await doesStnExists(body.stnCode);
 

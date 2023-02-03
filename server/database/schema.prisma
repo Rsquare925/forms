@@ -8,29 +8,60 @@ datasource db {
 }
 
 model station_master {
-  stnCode       String    @id @db.Char(3)
-  stnName       String    @db.VarChar(100)
-  startDate     DateTime  @db.Date
-  endDate       DateTime? @db.Date
-  booking       Boolean   @db.Bit(1)
-  delivery      Boolean   @db.Bit(1)
-  transshipment Boolean   @db.Bit(1)
-  address       String
-  city          String    @db.VarChar(100)
-  state         String    @db.VarChar(100)
-  pincode       String    @db.Char(6)
-  contactPerson String    @db.VarChar(50)
-  officePhoneNo String?   @db.Char(10)
-  email         String
-  mobileNo      String    @db.Char(10)
+  stnCode             String                @id @db.Char(3)
+  stnName             String                @unique(map: "stnName") @db.VarChar(100)
+  startDate           DateTime              @db.Date
+  endDate             DateTime?             @db.Date
+  booking             Boolean               @db.Bit(1)
+  delivery            Boolean               @db.Bit(1)
+  transshipment       Boolean               @db.Bit(1)
+  address             String
+  city                String                @db.VarChar(100)
+  state               String                @db.VarChar(100)
+  pincode             String                @db.Char(6)
+  contactPerson       String                @db.VarChar(50)
+  officePhoneNo       String?               @db.Char(10)
+  email               String
+  mobileNo            String                @db.Char(10)
+  gst_master_branches gst_master_branches[]
+  user_master         user_master[]
 }
 
 model user_master {
-  username   String    @db.VarChar(100)
-  password   String    @db.VarChar(250)
-  startDate  DateTime  @db.Date
-  closeDate  DateTime? @db.Date
-  officeLink String    @db.VarChar(100)
-  mobileNo   String    @db.Char(10)
-  email      String    @id @db.VarChar(255)
+  username       String         @unique(map: "username_UNIQUE") @db.VarChar(100)
+  password       String         @db.VarChar(250)
+  startDate      DateTime?      @db.Date
+  closeDate      DateTime?      @db.Date
+  officeLink     String         @db.VarChar(100)
+  mobileNo       String         @db.Char(10)
+  email          String         @id @db.VarChar(255)
+  station_master station_master @relation(fields: [officeLink], references: [stnName], onDelete: Cascade, map: "user_master_ibfk_1")
+
+  @@index([officeLink], map: "officeLink")
+}
+
+model gst_master_branches {
+  id              Int             @db.UnsignedInt
+  stnName         String          @db.VarChar(100)
+  statusActive    Boolean         @db.Bit(1)
+  gst_master_name gst_master_name @relation(fields: [id], references: [id], onDelete: Cascade, map: "gst_master_branches_ibfk_1")
+  station_master  station_master  @relation(fields: [stnName], references: [stnName], onDelete: Cascade, map: "gst_master_branches_ibfk_2")
+
+  @@id([id, stnName])
+  @@index([stnName], map: "stnName_index")
+}
+
+model gst_master_name {
+  id                  Int                          @id @default(autoincrement()) @db.UnsignedInt
+  nameOfParty         String                       @unique(map: "nameOfParty_UNIQUE") @db.VarChar(200)
+  typeOfNumber        gst_master_name_typeOfNumber
+  num                 String                       @unique(map: "num") @db.VarChar(20)
+  gst_master_branches gst_master_branches[]
+}
+
+enum gst_master_name_typeOfNumber {
+  mobileNo
+  gstNo
+  aadhaarNo
+  panNo
 }
