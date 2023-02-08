@@ -63,3 +63,29 @@ export function validateEmail(input: string, element: HTMLElement) {
     return false;
     
 }
+
+export function validateFieldByLen(field: string, fieldEle: HTMLElement, fieldLen: number): boolean{
+    const trimmedField = field.trim();
+    if(trimmedField.length >= fieldLen){
+        generateFieldsErr(fieldEle);
+        return true;
+    }
+    else if(fieldLen === 15){
+        const errorMsg = "GST NO should contain 15 characters.";
+        generateFieldsErr(fieldEle, errorMsg);
+    }
+    else if(fieldLen === 12){
+        const errorMsg = "Aadhaar NO should contain 12 characters.";
+        generateFieldsErr(fieldEle, errorMsg);
+    }
+    else if(fieldLen === 10){
+        const errorMsg = "Pan NO should contain 10 characters.";
+        generateFieldsErr(fieldEle, errorMsg);
+    }
+    else if(fieldLen === 21){
+        const errorMsg = "CIN NO should contain 21 characters.";
+        generateFieldsErr(fieldEle, errorMsg);
+    }
+    return false;
+    
+}

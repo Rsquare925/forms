@@ -1,4 +1,3 @@
-import { UserMaster } from '~/types/UserMaster';
 import bcrypt from 'bcrypt';
 import { doesEmailExists } from "~/server/database/services/userMasterService";
 import { createUser } from '~/server/database/repositories/userMasterRepository';

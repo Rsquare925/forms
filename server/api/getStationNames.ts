@@ -5,10 +5,5 @@ export default defineEventHandler(async (event) => {
     if(stnNames.length === 0){
         return false;
     }
-    // const stnCodeArr = [];
-    // const arr = stnNames.map((stn) => {
-    //     stnCodeArr.push(stn.stnCode);
-    //     return stn.stnName;
-    // });
     return stnNames;
 })

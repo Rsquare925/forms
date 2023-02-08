@@ -23,6 +23,7 @@ model station_master {
   officePhoneNo       String?               @db.Char(10)
   email               String
   mobileNo            String                @db.Char(10)
+  client_master       client_master[]
   gst_master_branches gst_master_branches[]
   user_master         user_master[]
 }
@@ -30,7 +31,7 @@ model station_master {
 model user_master {
   username       String         @unique(map: "username_UNIQUE") @db.VarChar(100)
   password       String         @db.VarChar(250)
-  startDate      DateTime?      @db.Date
+  startDate      DateTime       @db.Date
   closeDate      DateTime?      @db.Date
   officeLink     String         @db.VarChar(100)
   mobileNo       String         @db.Char(10)
@@ -57,6 +58,52 @@ model gst_master_name {
   typeOfNumber        gst_master_name_typeOfNumber
   num                 String                       @unique(map: "num") @db.VarChar(20)
   gst_master_branches gst_master_branches[]
+}
+
+model client_category_master {
+  code          String          @id @db.VarChar(5)
+  categoryName  String          @unique(map: "categoryName") @db.VarChar(200)
+  client_master client_master[]
+}
+
+model client_master {
+  code                   String                 @id @db.VarChar(10)
+  name                   String                 @unique(map: "name") @db.VarChar(200)
+  printName              String                 @unique(map: "printName") @db.VarChar(200)
+  clientGroup            String?                @db.VarChar(200)
+  categoryGroup          String                 @db.VarChar(200)
+  clientStn              String                 @db.VarChar(100)
+  contactPerson          String                 @db.VarChar(150)
+  address                String
+  city                   String                 @db.VarChar(100)
+  mobileNo               String                 @db.Char(10)
+  email                  String
+  cinNo                  String                 @db.Char(21)
+  panNo                  String                 @db.Char(10)
+  dueDays                Int                    @db.UnsignedSmallInt
+  openingBalance         Decimal                @db.Decimal(15, 2)
+  reportingTo            String                 @db.VarChar(200)
+  outstandingAt          String                 @db.VarChar(200)
+  restartDate            DateTime?              @db.Date
+  billingAddress         String
+  billingCity            String                 @db.VarChar(100)
+  gstNo                  String                 @db.Char(15)
+  clientType             String                 @db.VarChar(7)
+  station_master         station_master         @relation(fields: [clientStn], references: [stnName], onDelete: Cascade, map: "client_master_ibfk_1")
+  client_category_master client_category_master @relation(fields: [categoryGroup], references: [categoryName], onDelete: Cascade, map: "client_master_ibfk_2")
+
+  @@index([categoryGroup], map: "categoryGroup")
+  @@index([clientStn], map: "clientStn")
+}
+
+model owner_master_entry {
+  ownerName  String  @id @db.VarChar(250)
+  fatherName String  @db.VarChar(200)
+  address    String  @db.VarChar(300)
+  addressT   String? @db.VarChar(300)
+  phoneNo    String? @db.VarChar(10)
+  panNo      String? @db.VarChar(10)
+  tds        Boolean @db.Bit(1)
 }
 
 enum gst_master_name_typeOfNumber {

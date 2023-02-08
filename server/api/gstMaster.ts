@@ -1,4 +1,3 @@
-import { GstMaster } from "~/types/GstMaster";
 import { doesPartyExists } from "@/server/database/services/gstMasterService";
 import { createParty } from "@/server/database/repositories/gstMasterRepositories";
 

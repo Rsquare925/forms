@@ -78,7 +78,7 @@ const gstNo = ref("");
 const mobileNo = ref("");
 const selectedStns: Ref<string[]> = ref([]);
 
-const stnNames: Ref<{stnCode: string, stnName: string}[]> = ref([]);
+const stnNames: Ref<StnNames[]> = ref([]);
 callStnNamesApi(stnNames);
 
 
@@ -188,27 +188,6 @@ function validateType(): boolean{
     }
 }
 
-function validateFieldByLen(field: string, fieldEle: HTMLElement, fieldLen: number): boolean{
-    const trimmedField = field.trim();
-    if(trimmedField.length >= fieldLen){
-        generateFieldsErr(fieldEle);
-        return true;
-    }
-    else if(fieldLen === 15){
-        const errorMsg = "GST NO should contain 15 characters.";
-        generateFieldsErr(fieldEle, errorMsg);
-    }
-    else if(fieldLen === 12){
-        const errorMsg = "Aadhaar NO should contain 12 characters.";
-        generateFieldsErr(fieldEle, errorMsg);
-    }
-    else if(fieldLen === 10){
-        const errorMsg = "Pan NO should contain 10 characters.";
-        generateFieldsErr(fieldEle, errorMsg);
-    }
-    return false;
-    
-}
 </script>
 
 <style scoped>

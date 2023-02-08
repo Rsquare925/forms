@@ -1,4 +1,4 @@
-export interface GstMaster {
+interface GstMaster {
     nameOfParty: string,
     typeOfNumber: "mobileNo" | "panNo" | "aadhaarNo" | "gstNo",
     num: string,

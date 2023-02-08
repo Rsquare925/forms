@@ -1,5 +1,4 @@
-import { StnMaster } from '~~/types/StnMaster';
-import { H3Event, sendError } from 'h3'
+import { sendError } from 'h3'
 import { doesStnExists } from '~/server/database/services/stnMasterService';
 import { createStn } from '~/server/database/repositories/stnMasterRepository';
 

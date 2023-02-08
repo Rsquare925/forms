@@ -1,4 +1,4 @@
-export interface StnMaster {
+interface StnMaster {
     stnCode: string
     stnName: string
     startDate: string

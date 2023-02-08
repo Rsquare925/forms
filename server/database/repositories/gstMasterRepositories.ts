@@ -1,6 +1,4 @@
 import prisma from "~/server/database/client";
-import { GstMaster } from "~/types/GstMaster";
-
 
 export async function getGstMasterByPartyName(num: string): Promise<boolean>{
     const id =  await prisma.gst_master_name.findUnique({

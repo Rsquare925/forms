@@ -113,10 +113,12 @@ const officePhoneNo: Ref<string | null> = ref(null);
 const email = ref("");
 const mobileNo = ref("");
 
-const stnNames: Ref<{stnCode: string, stnName: string}[]> = ref([]);
+const stnNames: Ref<StnNames[]> = ref([]);
 
 callStnNamesApi(stnNames);
 
+
+// function for setting data to input fields while editing 
 function setData(stnData: station_master){
     stnCode.value = stnData.stnCode;
     stnName.value = stnData.stnName;

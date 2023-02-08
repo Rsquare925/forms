@@ -1,5 +1,4 @@
 import prisma from "~/server/database/client";
-import { UserMaster } from "~~/types/UserMaster";
 
 export async function getUserMasterByEmail(email: string): Promise<boolean>{
     const username =  await prisma.user_master.findUnique({

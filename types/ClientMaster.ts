@@ -1,0 +1,23 @@
+interface ClientMaster{
+    name: string,    
+    printName: string,
+    clientGroup: string | null,
+    categoryGroup: string,
+    clientStn: string,
+    contactPerson: string,
+    address: string,
+    city: string,
+    mobileNo: string,
+    email: string,
+    cinNo: string,
+    panNo: string,
+    dueDays: number | 0,
+    openingBalance: number | 0.00,
+    reportingTo: string,
+    outstandingAt: string,
+    restartDate: string | null,
+    billingAddress: string,
+    billingCity: string,
+    gstNo: string,
+    clientType: "1-TOPAY" | "2-PAID" | "3-TBB"
+}

@@ -1,4 +1,4 @@
-export interface UserMaster {
+interface UserMaster {
     username: string,
     password: string,
     email: string,

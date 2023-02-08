@@ -1,4 +1,3 @@
-import { StnMaster } from "~~/types/StnMaster";
 import prisma from "~/server/database/client";
 import { station_master } from "@prisma/client";
 
@@ -35,11 +34,6 @@ export async function createStn(stnData: StnMaster){
         }
     })
     return stn;
-}
-
-interface StnNames {
-    stnName: string;
-    stnCode: string;
 }
 
 export async function getAllStnNames():
