@@ -81,7 +81,7 @@ model client_master {
   cinNo                  String                 @db.Char(21)
   panNo                  String                 @db.Char(10)
   dueDays                Int                    @db.UnsignedSmallInt
-  openingBalance         Decimal                @db.Decimal(15, 2)
+  openingBalance         Decimal                @db.Decimal(18, 5)
   reportingTo            String                 @db.VarChar(200)
   outstandingAt          String                 @db.VarChar(200)
   restartDate            DateTime?              @db.Date
@@ -124,7 +124,7 @@ model lorry_master_entry {
   owner              String?             @db.VarChar(250)
   panNo              String?             @db.VarChar(10)
   loanNo             String?             @db.VarChar(100)
-  emiAmount          Decimal             @db.Decimal(15, 2)
+  emiAmount          Decimal             @db.Decimal(18, 5)
   totalEmi           Int                 @db.UnsignedInt
   emiStartDate       DateTime?           @db.Date
   emiEndDate         DateTime?           @db.Date

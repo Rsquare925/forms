@@ -17,3 +17,14 @@ export async function createOwner(ownerData: owner_master_entry){
     return owner;
 
 }
+
+export async function getAllOwnerNames():
+ Promise<OwnerName[]>{
+    const ownerNames = await prisma.owner_master_entry.findMany({
+        select: {
+            ownerName: true
+        }
+    });
+
+    return ownerNames;
+}
