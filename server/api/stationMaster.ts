@@ -1,18 +1,8 @@
 import { sendError } from 'h3'
-import { doesStnExists } from '~/server/database/services/stnMasterService';
 import { createStn } from '~/server/database/repositories/stnMasterRepository';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
-
-    const stnExists = await doesStnExists(body.stnCode);
-
-    if(stnExists.value === true){
-        return sendError(event, createError({ 
-            statusCode: 422,
-            statusMessage: stnExists.message
-        }));
-    }
 
     const stnData: StnMaster = {
         stnCode: body.stnCode,

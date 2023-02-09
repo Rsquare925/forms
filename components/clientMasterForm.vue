@@ -145,29 +145,6 @@
 <script setup lang="ts">
 import { Ref } from '@vue/reactivity';
 
-//  id varchar(10) primary key,
-// 	name varchar(200) not null unique,
-//     printName varchar(200) not null unique,
-//     clientGroup varchar(200) ,
-//     categoryGroup varchar(200) not null,
-//     clientStn varchar(100) not null,
-//     contactPerson varchar(150) not null,
-//     addrress varchar(191) not null,
-//     city varchar(100) not null,
-//     mobileNo char(10) not null,
-//     email varchar(191) not null,
-//     cinNo char(21) not null,
-//     panNo char(10) not null,
-//     dueDays smallint unsigned not null,
-//     openingBalance decimal(15, 2) not null,
-//     reportingTo varchar(200) not null,
-//     outstandingAt varchar(200) not null,
-//     restartDate date,
-//     billingAddrress varchar(191) not null,
-//     billingCity varchar(100) not null, 
-//     gstNo char(15) not null,
-//     clientType enum("1-TOPAY", "2-PAID", "3-TBB") not null 
-
 const name = ref("");
 const printName = ref("");
 const clientGroup: Ref<string | null> = ref(null);

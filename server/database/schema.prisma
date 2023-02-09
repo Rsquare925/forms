@@ -97,13 +97,44 @@ model client_master {
 }
 
 model owner_master_entry {
-  ownerName  String  @id @db.VarChar(250)
-  fatherName String  @db.VarChar(200)
-  address    String  @db.VarChar(300)
-  addressT   String? @db.VarChar(300)
-  phoneNo    String? @db.VarChar(10)
-  panNo      String? @db.VarChar(10)
-  tds        Boolean @db.Bit(1)
+  ownerName          String               @id @db.VarChar(250)
+  fatherName         String               @db.VarChar(200)
+  address            String               @db.VarChar(300)
+  addressT           String?              @db.VarChar(300)
+  mobileNo           String?              @db.VarChar(10)
+  panNo              String?              @db.VarChar(10)
+  tds                Boolean              @db.Bit(1)
+  lorry_master_entry lorry_master_entry[]
+}
+
+model lorry_master_entry {
+  code               String              @id @db.VarChar(10)
+  lorryNo            String              @db.VarChar(10)
+  createLedger       Boolean             @db.Bit(1)
+  ownVehicle         Boolean             @db.Bit(1)
+  registeredAt       String?             @db.VarChar(250)
+  bodyType           String?             @db.VarChar(150)
+  make               String?             @db.VarChar(250)
+  model              String?             @db.VarChar(250)
+  color              String?             @db.VarChar(150)
+  size               String?             @db.VarChar(100)
+  chassis            String              @db.VarChar(250)
+  engine             String              @db.VarChar(250)
+  fitnessUpto        DateTime?           @db.Date
+  owner              String?             @db.VarChar(250)
+  panNo              String?             @db.VarChar(10)
+  loanNo             String?             @db.VarChar(100)
+  emiAmount          Decimal             @db.Decimal(15, 2)
+  totalEmi           Int                 @db.UnsignedInt
+  emiStartDate       DateTime?           @db.Date
+  emiEndDate         DateTime?           @db.Date
+  financeFrom        String?             @db.VarChar(200)
+  emiByBank          String?             @db.VarChar(200)
+  noc                Boolean             @db.Bit(1)
+  nocDate            DateTime?           @db.Date
+  owner_master_entry owner_master_entry? @relation(fields: [owner], references: [ownerName], onDelete: Cascade, map: "lorry_master_entry_ibfk_1")
+
+  @@index([owner], map: "owner")
 }
 
 enum gst_master_name_typeOfNumber {
