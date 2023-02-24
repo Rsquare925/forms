@@ -27,7 +27,6 @@ async function getLatestCode(){
 
 export async function createClient(clientData: ClientMaster){
     const code = await getLatestCode();
-    console.log(clientData.restartDate);
     const client = await prisma.client_master.create({
         data: {
             code: code,

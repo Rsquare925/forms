@@ -23,6 +23,7 @@ model station_master {
   officePhoneNo       String?               @db.Char(10)
   email               String
   mobileNo            String                @db.Char(10)
+  broker_master_entry broker_master_entry[]
   client_master       client_master[]
   gst_master_branches gst_master_branches[]
   user_master         user_master[]
@@ -109,7 +110,7 @@ model owner_master_entry {
 
 model lorry_master_entry {
   code               String              @id @db.VarChar(10)
-  lorryNo            String              @db.VarChar(10)
+  lorryNo            String              @unique(map: "lorryNo_UNIQUE") @db.VarChar(10)
   createLedger       Boolean             @db.Bit(1)
   ownVehicle         Boolean             @db.Bit(1)
   registeredAt       String?             @db.VarChar(250)
@@ -135,6 +136,35 @@ model lorry_master_entry {
   owner_master_entry owner_master_entry? @relation(fields: [owner], references: [ownerName], onDelete: Cascade, map: "lorry_master_entry_ibfk_1")
 
   @@index([owner], map: "owner")
+}
+
+model broker_master_entry {
+  brokerCode     String          @id @db.VarChar(10)
+  branch         String?         @db.VarChar(100)
+  brokerName     String          @unique(map: "brokerName") @db.VarChar(250)
+  contactPerson  String          @db.VarChar(200)
+  address        String          @db.VarChar(300)
+  mobileNo       String?         @db.VarChar(10)
+  panNo          String?         @db.VarChar(10)
+  zone           String?         @db.VarChar(100)
+  openBody       Boolean         @db.Bit(1)
+  trailer        Boolean         @db.Bit(1)
+  container      Boolean         @db.Bit(1)
+  station_master station_master? @relation(fields: [branch], references: [stnName], onDelete: NoAction, map: "broker_master_entry_ibfk_1")
+
+  @@index([branch], map: "branch")
+}
+
+model driver_master_entry {
+  driverCode  String    @id @db.VarChar(10)
+  driverName  String    @unique(map: "driverName") @db.VarChar(250)
+  fatherName  String    @db.VarChar(200)
+  address     String    @db.VarChar(300)
+  mobileNo    String?   @db.VarChar(10)
+  licenseNo   String?   @db.VarChar(20)
+  licenseDate DateTime? @db.Date
+  issuedBy    String?   @db.VarChar(200)
+  validUpto   DateTime? @db.Date
 }
 
 enum gst_master_name_typeOfNumber {

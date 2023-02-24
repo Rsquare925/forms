@@ -27,10 +27,6 @@ const emit = defineEmits<{
   (e: "stnData", stnData: station_master): void;
 }>();
 
-// function selected(event: MouseEvent){
-//     console.log( event.target!.classList.add("selected"))
-// }
-
 function editForm(event: MouseEvent) {
   // console.log(event);
   const data: string = (event.target as HTMLElement).dataset.code!;
