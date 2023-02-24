@@ -1,7 +1,7 @@
 import prisma from "~/server/database/client";
 import { broker_master_entry } from '@prisma/client';
 
-async function getLatestbrokerCode(){
+async function getLatestBrokerCode(){
     const latestRow = await prisma.broker_master_entry.findFirst({
         orderBy: {
             brokerCode: "desc"
@@ -15,7 +15,7 @@ async function getLatestbrokerCode(){
 }
 
 export async function createBroker(brokerData: broker_master_entry){
-    const brokerCode = await getLatestbrokerCode();
+    const brokerCode = await getLatestBrokerCode();
 
     const broker = await prisma.broker_master_entry.create({
         data: {

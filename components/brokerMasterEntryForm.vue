@@ -30,7 +30,7 @@
         />
       </div>
 
-      <div class="input-address mt-4">
+      <div class="mt-4">
         <div>
           <label for="addressT">CONTACT PERSON*</label><br />
           <input
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <div class="input-address">
+      <div class="">
         <div>
           <label for="address">ADDRESS*</label><br />
           <textarea
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="vertical-center">
+      <div class="">
         <label for="mobileNo">MOBILE NO</label><br />
         <input
           v-model="mobileNo"
