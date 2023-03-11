@@ -167,6 +167,12 @@ model driver_master_entry {
   validUpto   DateTime? @db.Date
 }
 
+model goods_group_master {
+  goodsGroupName String    @id @db.VarChar(150)
+  startDate      DateTime  @db.Date
+  endDate        DateTime? @db.Date
+}
+
 enum gst_master_name_typeOfNumber {
   mobileNo
   gstNo
