@@ -104,15 +104,9 @@
         </div>
         <div class="">
           <label for="state">STATE*</label><br />
-          <select
-            v-model="state"
-            class="max-w-[90%] overflow-scroll"
-            id="state"
-            name="state"
-            required
-          >
+          <select v-model="state" class="w-[100%]" id="state" name="state" required>
             <option value=""></option>
-            <option v-for="state in states" :value="state" :key="state">
+            <option class="" v-for="state in states" :value="state" :key="state">
               {{ state }}
             </option>
           </select>

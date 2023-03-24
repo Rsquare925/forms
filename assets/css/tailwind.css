@@ -5,14 +5,17 @@
 @layer components{
     *{
         box-sizing: border-box;
+        letter-spacing: 1.5px;
     }
     body{
-        @apply  min-h-screen flex items-center justify-around;
-        background: linear-gradient(135deg, #9897d9, #5d59ca);
+        @apply  min-h-screen flex items-center justify-around ;
+        /* background: linear-gradient(135deg, #c3c2e7, #c1c1c1); */
     }
-    body > *{
-        @apply w-[90%];
-    }
+    body > :not(header) {
+          @apply w-[90%];
+    } 
+
+
     input, textarea{
         border: 1px solid rgb(172, 172, 172);
         @apply px-2 py-1;
@@ -32,8 +35,15 @@
     }
     
     .form-container{
-        max-width: 900px;
-        @apply p-4 bg-white rounded-lg mx-auto my-4;
+        max-width: 1100px;
+        border: 2px solid rgb(47, 46, 46);
+        @apply p-4 bg-white rounded-lg mx-auto my-4 mt-[6rem];
+    }
+
+    @media (min-width: 1000px){
+        .form-container{
+            @apply ml-[19rem];
+        }
     }
     
     .form {
@@ -54,7 +64,7 @@
 
     }
 
-    button {
+    form button {
         @apply mt-4 font-bold  px-4 py-2 rounded-[.5rem] text-[1rem] min-w-[150px];
     }
     .submit-btn{
@@ -89,10 +99,11 @@
         display: none;
     }
 
-    .overlay.open{
+    .overlay.open
+    {
         display: block;
         @apply fixed top-[0] bottom-[0] left-[0] right-[0] z-[10];
-        background-color: rgba(0, 0, 0, .2);
+        background-color: rgba(0, 0, 0, .5);
     
     }
     .popup {
